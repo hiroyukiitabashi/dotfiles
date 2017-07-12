@@ -1,3 +1,58 @@
+
+let s:dein_dir = expand('~/.cache/dein')
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:dein_repo_dir)
+    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+  endif
+  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
+endif
+
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
+  let g:rc_dir = expand('~/.vim/rc')
+  let s:toml = g:rc_dir . '/dein.toml'
+  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
+  
+  call dein#load_toml(s:toml, {'lazy': 0})
+  call dein#load_toml(s:lazy_toml,{'lazy': 1})
+
+  call dein#add('Shougo/dein.vim')
+  call dein#add('Shougo/vimproc.vim' , {'build': 'make'})
+  call dein#add('Shougo/neocomplete.vim')
+  call dein#add('Shougo/neomru.vim')
+  call dein#add('Shougo/neosnippet')
+  call dein#add('ctrlpvim/ctrlp.vim')
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('Shougo/unite.vim')
+  call dein#add('Shougo/unite-outline')
+  call dein#add('osyo-manga/vim-brightest')
+  call dein#add('junegunn/vim-easy-align')
+  call dein#add('mattn/emmet-vim')
+  call dein#add('rking/ag.vim')
+  call dein#add('kana/vim-submode')
+  call dein#add('altercation/vim-colors-solarized')
+  call dein#end()
+  call dein#save_state()
+endif
+
+if dein#check_install()
+  call dein#install()
+endif
+
+syntax on
+set background=dark
+"set lines=55
+"set columns=180
+colorscheme solarized
+set backspace=start,eol,indent
+set whichwrap=b,s,[,],,~
+set autoindent
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set cursorline
+set number
 set fenc=utf-8
 " バックアップファイルを作らない
 set nobackup
@@ -31,6 +86,7 @@ set laststatus=2
 " " コマンドラインの補完
 set wildmode=list:longest
 " " 折り返し時に表示行単位での移動できるようにする
+set guifont=Ricty-RegularForPowerline:h14
 nnoremap j gj
 nnoremap k gk
 "
@@ -59,3 +115,44 @@ set wrapscan
 set hlsearch
 " " ESC連打でハイライト解除
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
+inoremap<silent>jj <ESC>
+
+
+"画面分割周り
+nnoremap s <Nop>
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l
+nnoremap sh <C-w>h
+nnoremap sJ <C-w>J
+nnoremap sK <C-w>K
+nnoremap sL <C-w>L
+nnoremap sH <C-w>H
+nnoremap sn gt
+nnoremap sp gT
+nnoremap sr <C-w>r
+nnoremap s= <C-w>=
+nnoremap sw <C-w>w
+nnoremap so <C-w>_<C-w>|
+nnoremap sO <C-w>=
+nnoremap sN :<C-u>bn<CR>
+nnoremap sP :<C-u>bp<CR>
+nnoremap st :<C-u>tabnew<CR>
+nnoremap sT :<C-u>Unite tab<CR>
+nnoremap ss :<C-u>sp<CR>
+nnoremap sv :<C-u>vs<CR>
+nnoremap sq :<C-u>q<CR>
+nnoremap sQ :<C-u>bd<CR>
+nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
+nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
+noremap ; :
+noremap : ;
+call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
+call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
+call submode#enter_with('bufmove', 'n', '', 's+', '<C-w>+')
+call submode#enter_with('bufmove', 'n', '', 's-', '<C-w>-')
+call submode#map('bufmove', 'n', '', '>', '<C-w>>')
+call submode#map('bufmove', 'n', '', '<', '<C-w><')
+call submode#map('bufmove', 'n', '', '+', '<C-w>+')
+call submode#map('bufmove', 'n', '', '-', '<C-w>-')
