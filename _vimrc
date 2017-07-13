@@ -52,7 +52,7 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 set cursorline
-set number
+"set number
 set fenc=utf-8
 " バックアップファイルを作らない
 set nobackup
@@ -68,7 +68,7 @@ set showcmd
 "
 " " 見た目系
 " " 行番号を表示
-set number
+" " set number
 " " 現在の行を強調表示
 set cursorline
 " " 現在の行を強調表示（縦）
