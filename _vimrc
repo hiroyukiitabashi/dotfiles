@@ -1,4 +1,4 @@
-
+"動いてないの多め。deinが全部addでいいのかとかtomlって何、とかvimrcの言語（シェルじゃないと思うんだけど）からある程度勉強しておきたい。
 let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 if &runtimepath !~# '/dein.vim'
@@ -93,6 +93,7 @@ nnoremap k gk
 "
 " " Tab系
 " " 不可視文字を可視化(タブが「▸-」と表示される)
+" " 多分これも機能してない。.tmux.confのせい（で競合してるの）だと思うのだけれどvimrcは機能してないものが多い。
 set list listchars=tab:\▸\-
 " " Tab文字を半角スペースにする
 set expandtab
@@ -120,6 +121,7 @@ inoremap<silent>jj <ESC>
 
 
 "画面分割周り
+"書いてはいるけど機能しない。tmuxが原因？画面分割はC-a（Prefix）＋| or  - で。
 nnoremap s <Nop>
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
