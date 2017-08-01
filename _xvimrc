@@ -121,3 +121,13 @@ call submode#map('bufmove', 'n', '', '<', '<C-w><')
 call submode#map('bufmove', 'n', '', '+', '<C-w>+')
 call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 
+
+remap <C-n> :xccmd jumpToNextCounterpart<CR>
+#フォルダ内のファイル一覧表示
+noremap <C-m> :xccmd showGroupFilesMenu<CR>
+#コメント(C-/はxcodeのショートカットに割り当てられているため、Preferences＞KeyBindingsで無効にすること)
+noremap <C-/> :xccmd commentAndUncommentCurrentLines<CR>
+#15/7/12追加 C-oが何かに割り当てられていたら無効にすること
+noremap <C-o> :xccmd goBackInHistoryByCommand<CR>
+noremap <C-i> :xccmd goForwardInHistoryByCommand<CR>
+
