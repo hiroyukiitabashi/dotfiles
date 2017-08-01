@@ -120,7 +120,7 @@ set wrapscan
 " " 検索語をハイライト表示
 set hlsearch
 " " ESC連打でハイライト解除
-nmap <Esc><Esc> :nohlsearch<CR><Esc>
+nnoremap <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 inoremap<silent>jj <ESC>
 
