@@ -1,6 +1,10 @@
 "branch test
 
 "動いてないの多め。deinが全部addでいいのかとかtomlって何、とかvimrcの言語（シェルじゃないと思うんだけど）からある程度勉強しておきたい。
+if &compatible
+  set nocompatible
+endif
+let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
 let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 if &runtimepath !~# '/dein.vim'
@@ -15,10 +19,9 @@ if dein#load_state(s:dein_dir)
   let g:rc_dir = expand('~/.vim/rc')
   let s:toml = g:rc_dir . '/dein.toml'
   let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
-  
   call dein#load_toml(s:toml, {'lazy': 0})
   call dein#load_toml(s:lazy_toml,{'lazy': 1})
-  
+  call dein#add('hiroyukiitabashi/hellobeautifulworld.vim')
   call dein#add('Shougo/neocomplete.vim')
   call dein#add('Shougo/unite.vim')
   call dein#add('Shougo/dein.vim')
@@ -36,19 +39,26 @@ if dein#load_state(s:dein_dir)
   call dein#add('rking/ag.vim')
   call dein#add('kana/vim-submode')
   call dein#add('altercation/vim-colors-solarized')
+  call dein#add('altercation/vim-colors-solarized')
+  call dein#add('jacoborus/tender.vim')
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('Shougo/denite.nvim')
+
   call dein#end()
   call dein#save_state()
-endif
 
-if dein#check_install()
-  call dein#install()
+
+  
 endif
+"if dein#check_install(['hello-world-vim''])
+"  call dein#install(['hello-world-vim'])
+"endif
 
 syntax on
 set background=dark
 "set lines=55
 "set columns=180
-colorscheme solarized
+ colorscheme solarized
 set backspace=start,eol,indent
 set whichwrap=b,s,[,],,~
 set autoindent
@@ -56,7 +66,7 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 set cursorline
-"set number
+set number
 set fenc=utf-8
 " バックアップファイルを作らない
 set nobackup
@@ -123,7 +133,6 @@ set hlsearch
 nnoremap <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 inoremap<silent>jj <ESC>
-
 
 "画面分割周り
 nnoremap s <Nop>
@@ -285,3 +294,7 @@ if !exists('g:neocomplete#force_omni_input_patterns')
               endif
               let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
+"python
+autocmd FileType python setl autoindent
+autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4

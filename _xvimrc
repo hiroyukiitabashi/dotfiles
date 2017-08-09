@@ -1,7 +1,19 @@
 "branch test
 
 "動いてないの多め。deinが全部addでいいのかとかtomlって何、とかvimrcの言語（シェルじゃないと思うんだけど）からある程度勉強しておきたい。
+augroup vimrc-local
+  autocmd!
+    autocmd BufNewFile,BufReadPost * call s:vimrc_local(expand('<afile>:p:h'))
+    augroup END
 
+    function! s:vimrc_local(loc)
+      let files = findfile('.vimrc.local', escape(a:loc, ' ') . ';', -1)
+        for i in reverse(filter(files, 'filereadable(v:val)'))
+              source `=i`
+                endfor
+                endfunction
+"set runtimepath-={$HOME/Desktop/hello-beautiful-world-vim}
+"set source
 syntax on
 set background=dark
 "set lines=55
@@ -49,8 +61,8 @@ set laststatus=2
 set wildmode=list:longest
 " " 折り返し時に表示行単位での移動できるようにする
 set guifont=Ricty-RegularForPowerline:h14
-nnoremap j gj
-nnoremap k gk
+"nnoremap j gj
+"nnoremap k gk
 set vb t_vb=
 "
 "
@@ -64,7 +76,6 @@ set expandtab
 set tabstop=2
 " " 行頭でのTab文字の表示幅
 set shiftwidth=2
-"
 "
 " " 検索系
 " " 検索文字列が小文字の場合は大文字小文字を区別なく検索する
@@ -81,7 +92,7 @@ set hlsearch
 nnoremap <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 inoremap jj <ESC>
-
+"inoremap っｊ <ESC>
 
 "画面分割周り
 nnoremap s <Nop>
@@ -122,12 +133,17 @@ call submode#map('bufmove', 'n', '', '+', '<C-w>+')
 call submode#map('bufmove', 'n', '', '-', '<C-w>-')
 
 
-remap <C-n> :xccmd jumpToNextCounterpart<CR>
-#フォルダ内のファイル一覧表示
+"フォルダ内のファイル一覧表示
 noremap <C-m> :xccmd showGroupFilesMenu<CR>
-#コメント(C-/はxcodeのショートカットに割り当てられているため、Preferences＞KeyBindingsで無効にすること)
+"コメント(C-/はxcodeのショートカットに割り当てられているため、Preferences＞KeyBindingsで無効にすること)
 noremap <C-/> :xccmd commentAndUncommentCurrentLines<CR>
-#15/7/12追加 C-oが何かに割り当てられていたら無効にすること
+"15/7/12追加 C-oが何かに割り当てられていたら無効にすること
 noremap <C-o> :xccmd goBackInHistoryByCommand<CR>
 noremap <C-i> :xccmd goForwardInHistoryByCommand<CR>
-
+noremap <C-b> :xccmd toggleBreakpointAtCurrentLine<CR>
+noremap gt :xccmd selectNextTab<CR>
+noremap gT :xccmd selectPreviousTab<CR>
+"noremap pj :xccmd changeToStructureNavigator<CR>
+noremap <C-s> :xccmd cancelCurrentExecution<CR>
+noremap gu :xccmd toggleUtilitiesVisibilityAlternate<CR>
+noremap gn :xccmd toggleNavigatorsVisibility<CR>
