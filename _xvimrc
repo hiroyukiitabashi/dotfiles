@@ -104,6 +104,17 @@ nnoremap sJ <C-w>J
 nnoremap sK <C-w>K
 nnoremap sL <C-w>L
 nnoremap sH <C-w>H
+nnoremap <C-a> <Nop>
+nnoremap <C-a>j <C-w>j
+nnoremap <C-a>k <C-w>k
+nnoremap <C-a>l <C-w>l
+nnoremap <C-a>h <C-w>h
+nnoremap <C-a>J <C-w>J
+nnoremap <C-a>K <C-w>K
+nnoremap <C-a>L <C-w>L
+nnoremap <C-a>H <C-w>H
+nnoremap <C-a>| <C-w>vs<CR>
+nnoremap <C-a>- <C-w>sp<CR>
 nnoremap sn gt
 nnoremap sp gT
 nnoremap sr <C-w>r
@@ -138,12 +149,19 @@ noremap <C-m> :xccmd showGroupFilesMenu<CR>
 "コメント(C-/はxcodeのショートカットに割り当てられているため、Preferences＞KeyBindingsで無効にすること)
 noremap <C-/> :xccmd commentAndUncommentCurrentLines<CR>
 "15/7/12追加 C-oが何かに割り当てられていたら無効にすること
-noremap <C-o> :xccmd goBackInHistoryByCommand<CR>
-noremap <C-i> :xccmd goForwardInHistoryByCommand<CR>
-noremap <C-b> :xccmd toggleBreakpointAtCurrentLine<CR>
-noremap gt :xccmd selectNextTab<CR>
-noremap gT :xccmd selectPreviousTab<CR>
+noremap <C-i> :xccmd goBackInHistoryByCommand<CR>
+noremap <C-o> :xccmd goForwardInHistoryByCommand<CR>
+noremap <Space>b :xccmd toggleBreakpointAtCurrentLine<CR>
+noremap <Space>t :xccmd selectNextTab<CR>
+noremap <Space>T :xccmd selectPreviousTab<CR>
+noremap <Space>n :xccmd newTab<CR>
+noremap <Space>x :xccmd closeCurrentTab<CR>
+
 "noremap pj :xccmd changeToStructureNavigator<CR>
 noremap <C-s> :xccmd cancelCurrentExecution<CR>
 noremap gu :xccmd toggleUtilitiesVisibilityAlternate<CR>
 noremap gn :xccmd toggleNavigatorsVisibility<CR>
+noremap <Space>f :xccmd fold<CR>
+noremap <Space>u :xccmd unfold<CR>
+nnoremap <C-l> i<C-l><Esc>
+inoremap <C-e> <Esc>A

@@ -1,17 +1,51 @@
+
 "branch test
 
 "動いてないの多め。deinが全部addでいいのかとかtomlって何、とかvimrcの言語（シェルじゃないと思うんだけど）からある程度勉強しておきたい。
+"----------------
+"vimrc
+"----------------
+nnoremap <silent> <Space>ev :<C-u>edit $MYVIMRC<CR>
+nnoremap <silent> <Space>et :<C-u>edit $HOME/.vim/dein.toml<CR>
+nnoremap <silent> <Space>sv :<C-u>source $MYVIMRC<CR>
+"----------------
+"template
+"----------------
+autocmd BufNewFile *.py 0r $HOME/dotfiles/template/python/pythontemplate.txt
+let mapleader = "\<Space>"
+
+
 if &compatible
   set nocompatible
 endif
+
+augroup MyAutoCmd
+  autocmd!
+augroup END
+
+let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
+
 let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
-let s:dein_dir = expand('~/.cache/dein')
+let s:dein_dir = '~/.cache/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+
 if &runtimepath !~# '/dein.vim'
   if !isdirectory(s:dein_repo_dir)
-    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+   call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
   endif
   execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
+endif
+
+let s:toml_file = '~/.vim/dein.toml'
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
+  call dein#load_toml(s:toml_file)
+  call dein#end()
+  call dein#save_state()
+endif
+
+if has('vim_starting') && dein#check_install()
+  call dein#install()
 endif
 
 if dein#load_state(s:dein_dir)
@@ -21,38 +55,12 @@ if dein#load_state(s:dein_dir)
   let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
   call dein#load_toml(s:toml, {'lazy': 0})
   call dein#load_toml(s:lazy_toml,{'lazy': 1})
-  call dein#add('hiroyukiitabashi/hellobeautifulworld.vim')
-  call dein#add('Shougo/neocomplete.vim')
-  call dein#add('Shougo/unite.vim')
-  call dein#add('Shougo/dein.vim')
-  call dein#add('Shougo/vimproc.vim' , {'build': 'make'})
-  call dein#add('Shougo/neocomplete.vim')
-  call dein#add('Shougo/neomru.vim')
-  call dein#add('Shougo/neosnippet')
-  call dein#add('ctrlpvim/ctrlp.vim')
-  call dein#add('scrooloose/nerdtree')
-  call dein#add('Shougo/unite.vim')
-  call dein#add('Shougo/unite-outline')
-  call dein#add('osyo-manga/vim-brightest')
-  call dein#add('junegunn/vim-easy-align')
-  call dein#add('mattn/emmet-vim')
-  call dein#add('rking/ag.vim')
-  call dein#add('kana/vim-submode')
-  call dein#add('altercation/vim-colors-solarized')
-  call dein#add('altercation/vim-colors-solarized')
-  call dein#add('jacoborus/tender.vim')
-  call dein#add('Shougo/deoplete.nvim')
-  call dein#add('Shougo/denite.nvim')
-
   call dein#end()
-  call dein#save_state()
-
-
-  
+  call dein#save_state()  
 endif
-"if dein#check_install(['hello-world-vim''])
-"  call dein#install(['hello-world-vim'])
-"endif
+if dein#check_install()
+  call dein#install()
+endif
 
 syntax on
 set background=dark
@@ -298,3 +306,12 @@ if !exists('g:neocomplete#force_omni_input_patterns')
 autocmd FileType python setl autoindent
 autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
+"nnoremap z :MyNameIs Taro<CR>
+"nmap <F6>  <C-a> | 
+"tmuxのコマンドは認識してくれないっぽい（当たり前？）
+"nvim $MYVIMRC<CR>
+
+nnoremap * *zz
+nnoremap n nzz
+nnoremap N Nzz
+

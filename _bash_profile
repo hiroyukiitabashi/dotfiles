@@ -1,8 +1,9 @@
 export PATH=/usr/local/mecab/bin:$PATH
 export PATH=$PATH:/usr/local/bin/
+export PYTHONPATH="$PYTHONPATH:$HOME/pythonmodules"
 #export PYENV_ROOT="$HOME/.pyenv"
 export PYENV_ROOT="/usr/local/opt/pyenv"
 
+
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
-alias Lastfm='/Applications/Last.fm.app/'
