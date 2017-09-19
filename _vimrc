@@ -15,6 +15,9 @@ autocmd BufNewFile *.py 0r $HOME/dotfiles/template/python/pythontemplate.txt
 let mapleader = "\<Space>"
 
 
+"----------------
+"dein
+"----------------
 if &compatible
   set nocompatible
 endif
@@ -36,37 +39,96 @@ if &runtimepath !~# '/dein.vim'
   execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
 endif
 
-let s:toml_file = '~/.vim/dein.toml'
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
-  call dein#load_toml(s:toml_file)
-  call dein#end()
-  call dein#save_state()
-endif
-
-if has('vim_starting') && dein#check_install()
-  call dein#install()
-endif
-
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir)
-  let g:rc_dir = expand('~/.vim/rc')
+  let g:rc_dir = expand('~/.vim')
   let s:toml = g:rc_dir . '/dein.toml'
   let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
   call dein#load_toml(s:toml, {'lazy': 0})
-  call dein#load_toml(s:lazy_toml,{'lazy': 1})
+" call dein#load_toml(s:lazy_toml,{'lazy': 1})
   call dein#end()
   call dein#save_state()  
 endif
+
 if dein#check_install()
   call dein#install()
 endif
+
+"----------------
+"vimfiler
+"----------------
+let g:vimfiler_as_default_explorer=1
+let g:vimfiler_safe_mode_by_default = 0
+
+nnoremap <silent> <Space>f :VimFiler -split -simple -explorer -winwidth=30 -toggle -find<CR>
+autocmd! FileType vimfiler call s:my_vimfiler_settings()
+
+function! s:my_vimfiler_settings()
+  nmap <buffer><C-Q> <Plug>(vimfiler_hide)
+  nmap <buffer>H <Plug>(vimfiler_switch_to_parent_directory)
+  nmap <buffer>L <Plug>(vimfiler_cd_or_edit)
+  nnoremap <silent><buffer><expr> v vimfiler#do_switch_action('vsplit')
+  nnoremap <silent><buffer><expr> s vimfiler#do_switch_action('split')[
+  nmap <buffer><Space>w [myWindow]
+  nmap <buffer><Space>t [myWindowTab]
+  nmap <S-Space> <Plug>(vimfiler_toggle_mark_current_line)
+endfunction
+
+"----------------
+"unite
+"----------------
+"unite prefix key.
+nnoremap [unite] <Nop>
+nmap <Space>u [unite]
+let g:unite_enable_start_insert=1
+let g:unite_enable_ignore_case=1
+let g:unite_enable_smart_case=1
+let g:unite_update_time=100
+let g:unite_enable_split_vertically=1
+let g:unite_winwidth=70
+let g:unite_split_rule = 'rightbelow'
+let g:unite_source_history_yank_enable=1
+
+"バッファ一覧
+noremap [unite]b :Unite buffer<CR>
+"最近使ったファイルの一覧
+noremap [unite]m :Unite file_mru<CR>
+"カレントディレクトリ以下のファイル
+nnoremap [unite]f :Unite file_rec/async:!<CR>
+"レジスタ一覧
+nnoremap [unite]R :Unite -buffer-name=register register<CR>
+"ブックマーク一覧
+nnoremap [unite]c :Unite bookmark<CR>
+"ブックマークに追加
+nnoremap [unite]a :UniteBookmarkAdd<CR>
+"vim hacks
+nnoremap [unite]h :Unite vim_hacks<CR>
+"vim outline
+nnoremap [unite]o :Unite outline<CR>
+"yank history
+nnoremap [unite]y :Unite history/yank<CR>
+"全部乗せ
+nnoremap [unite]u :Unite -buffer-name=files buffer file_mru bookmark file<CR>
+
+"unite.vimを開いている間のキーマッピング
+autocmd FileType unite call s:my_unite_settings()
+function! s:my_unite_settings()
+  "ウィンドウを分割して開く
+  nnoremap <silent> <buffer> <expr> <C-S> unite#do_action('below')
+  inoremap <silent> <buffer> <expr> <C-S> unite#do_action('below')
+  "ウィンドウを縦に分割して開く
+  nnoremap <silent> <buffer> <expr> <C-V> unite#do_action('right')
+  inoremap <silent> <buffer> <expr> <C-V> unite#do_action('right')
+  "C-Qで終了
+  nmap <silent> <buffer> <C-Q> <Plug>(unite_exit)
+  imap <silent> <buffer> <C-Q> <Plug>(unite_exit)
+endfunction
 
 syntax on
 set background=dark
 "set lines=55
 "set columns=180
- colorscheme solarized
+colorscheme solarized
 set backspace=start,eol,indent
 set whichwrap=b,s,[,],,~
 set autoindent
@@ -314,4 +376,5 @@ autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
 nnoremap * *zz
 nnoremap n nzz
 nnoremap N Nzz
-
+nnoremap <Space>j <C-^>
+nnoremap <Space>b :bp<CR>

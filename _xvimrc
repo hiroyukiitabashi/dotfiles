@@ -92,7 +92,7 @@ set hlsearch
 nnoremap <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 inoremap jj <ESC>
-"inoremap っｊ <ESC>
+inoremap っｊ <Esc>dhdl
 
 "画面分割周り
 nnoremap s <Nop>

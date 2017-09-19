@@ -3,15 +3,16 @@ eval "$(pyenv virtualenv-init -)"
 
 export PATH=/usr/local/mecab/bin:$PATH
 export PATH=$PATH:/usr/local/bin/
+export PATH=$PATH:$HOME/.config/composer/vendor/bin:/usr/local/sbin
 #export PYENV_ROOT="$HOME/.pyenv"
 export PYENV_ROOT="/usr/local/opt/pyenv"
 export PYTHONPATH="$PYTHONPATH:$HOME/pythonmodules/"
-
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 #alias nvim='VIMRUNTIME=/usr/local/share/vim/vim80 VIM=/usr/local/Cellar/neovim/0.2.0_1/share/nvim nvim'
 alias Lastfm='/Applications/Last.fm.app/'
 alias vi='vim'
+alias q='exit'
 alias xcode='open /Applications/Xcode.app/'
 n is_exists() { type "$1" >/dev/null 2>&1; return $?; }
 function is_osx() { [[ $OSTYPE == darwin* ]]; }
